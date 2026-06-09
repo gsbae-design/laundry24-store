@@ -270,6 +270,13 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
   .nav-inner, .pg-inner, .admin-inner, .table-outer, .filter-bar, .stats-row { padding-left: 12px; padding-right: 12px; }
   .hero { padding: 28px 16px 22px; }
 }
+/* 토스트 알림 */
+.toast-wrap { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 900; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+.toast { background: var(--text); color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 16px rgba(0,0,0,.2); display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateY(10px); transition: opacity .25s, transform .25s; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.t-success { background: var(--success); }
+.toast.t-error { background: var(--danger); }
+.toast.t-warn { background: var(--warn); color: var(--text); }
 .top-btn { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--text); color: white; border: none; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 300; }
 .top-btn.visible { opacity: 1; pointer-events: auto; }
 .top-btn:hover { background: #333; transform: translateY(-2px); }
@@ -465,10 +472,26 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
 
 <script>
 // ============================================================
-// SUPABASE 설정 — 아래 두 줄만 본인 값으로 교체하세요
+// TOAST NOTIFICATION
+// ============================================================
+function showToast(msg, type = 'success', duration = 3000) {
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = `toast t-${type}`;
+  const icons = { success: '✓', error: '✕', warn: '⚠️' };
+  el.innerHTML = `<span>${icons[type] || ''}</span><span>${msg}</span>`;
+  wrap.appendChild(el);
+  requestAnimationFrame(() => { requestAnimationFrame(() => el.classList.add('show')); });
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 300);
+  }, duration);
+}
+
+// 아래 두 줄만 본인 값으로 교체하세요
 // ============================================================
 const SUPABASE_URL  = 'https://ebiepxqkqeyyxewnddov.supabase.co';   // 예: https://xxxx.supabase.co
-const SUPABASE_KEY  = 'sb_publishable_2fZWxxerbpn9tOqLrMfh7A_YXT0un6I';        // anon public key
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViaWVweHFrcWV5eXhld25kZG92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzA3NjIsImV4cCI6MjA5NjM0Njc2Mn0.LF0mgkF1o7_k-6HaI3O0r_DxRGRchq2FWuGVj37W5x8';        // anon public key
 
 // ============================================================
 // DATA
@@ -1028,7 +1051,7 @@ function highlightListItem(i) {
 
 async function saveStore() {
   const name = document.getElementById('f-name').value.trim();
-  if (!name) { alert('매장명을 입력해주세요.'); return; }
+  if (!name) { showToast('매장명을 입력해주세요.', 'warn'); return; }
 
   const btn = document.getElementById('btn-form-save');
   btn.disabled = true; btn.textContent = '저장 중...';
@@ -1079,13 +1102,11 @@ async function saveStore() {
       });
       STORES[editingIdx] = data;
     }
-    const msg = document.getElementById('save-msg');
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 2800);
+    showToast(editingIdx === -2 ? '매장이 추가되었습니다.' : '저장되었습니다.', 'success');
     renderList(); renderAlist();
     setTimeout(() => highlightListItem(STORES.findIndex(s => s.no === data.no)), 100);
   } catch(e) {
-    alert('저장 실패: ' + e.message);
+    showToast('저장 실패: ' + e.message, 'error', 4000);
   } finally {
     btn.disabled = false;
     btn.textContent = editingIdx === -2 ? '매장 추가' : '저장하기';
@@ -1110,7 +1131,7 @@ async function confirmDelete() {
     deleteTargetIdx = -1;
     renderList(); renderAlist();
   } catch(e) {
-    alert('삭제 실패: ' + e.message);
+    showToast('삭제 실패: ' + e.message, 'error', 4000);
     document.getElementById('confirm-overlay').classList.remove('open');
   }
 }
@@ -1149,17 +1170,15 @@ async function saveSched() {
       });
     }
     renderList();
-    const msg = document.getElementById('sched-save-msg');
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 3000);
+    showToast('운송 일정이 저장되었습니다. 매장 목록에 즉시 반영됩니다.', 'success');
   } catch(e) {
-    alert('저장 실패: ' + e.message);
+    showToast('저장 실패: ' + e.message, 'error', 4000);
   } finally {
     btn.disabled = false; btn.textContent = '일정 저장';
   }
 }
 
-const SCHED_PASSWORD = '15444335';
+const SCHED_PASSWORD = 'PASSWORD_HERE';
 let schedUnlocked = false;
 
 function openPwModal() {
@@ -1237,6 +1256,8 @@ loadData();
   </div>
 </div>
 
+
+<div class="toast-wrap" id="toast-wrap"></div>
 
 <button class="top-btn" id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">↑</button>
 
