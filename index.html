@@ -264,6 +264,56 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
 .btn-pw-confirm { flex: 1; background: var(--accent); color: white; border: none; padding: 11px; border-radius: 9px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .15s; }
 .btn-pw-confirm:hover { background: #008f79; }
 
+/* REFUND PAGE */
+.refund-wrap { max-width: 640px; margin: 0 auto; padding: 40px 24px 60px; }
+.refund-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+.refund-card-hd { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.refund-card-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 20px; flex-shrink: 0; }
+.refund-card-title { font-size: 17px; font-weight: 800; color: var(--text); }
+.refund-card-sub { font-size: 13px; color: var(--text2); margin-top: 2px; font-weight: 500; }
+.rf-section { margin-bottom: 20px; }
+.rf-label { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: .3px; }
+.rf-step-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 800; }
+.rf-step-num.done { background: var(--accent); color: white; }
+.rf-search-wrap { position: relative; }
+.rf-search-row { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1.5px solid var(--border2); border-radius: 10px; padding: 0 14px; height: 44px; transition: border-color .15s; }
+.rf-search-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,169,145,.1); }
+.rf-search-row input { border: none; outline: none; background: transparent; font-size: 14px; color: var(--text); flex: 1; height: 100%; font-family: inherit; font-weight: 500; }
+.rf-search-row input::placeholder { color: var(--text3); font-weight: 400; }
+.rf-search-row .si { color: var(--text3); font-size: 16px; flex-shrink: 0; }
+.rf-clear { background: none; border: none; cursor: pointer; color: var(--text3); padding: 0; display: none; line-height: 1; font-size: 16px; }
+.rf-dropdown { background: var(--white); border: 1.5px solid var(--border2); border-radius: 10px; margin-top: 5px; max-height: 220px; overflow-y: auto; display: none; box-shadow: var(--shadow-md); }
+.rf-dropdown.open { display: block; }
+.rf-dd-item { padding: 10px 14px; font-size: 14px; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); transition: background .1s; font-weight: 500; }
+.rf-dd-item:last-child { border-bottom: none; }
+.rf-dd-item:hover { background: var(--accent-light); }
+.rf-dd-badges { display: flex; gap: 4px; }
+.rf-pill { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 50px; }
+.rf-selected-store { background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; margin-top: 8px; }
+.rf-store-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.rf-store-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.rf-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.rf-chip { padding: 8px 16px; border-radius: 9px; border: 1.5px solid var(--border2); font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text2); background: var(--white); transition: all .12s; font-family: inherit; }
+.rf-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.rf-chip.on { background: var(--accent-light); border-color: var(--accent); color: #065f46; font-weight: 700; }
+.rf-chip.dashed { border-style: dashed; }
+.rf-chip.dashed.on { border-style: dashed; }
+.rf-result { border-radius: 12px; padding: 20px; margin-top: 20px; display: none; border: 1.5px solid; }
+.rf-result.show { display: block; }
+.rf-result-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.rf-result-label { font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 4px; opacity: .65; }
+.rf-result-owner { font-size: 24px; font-weight: 800; }
+.rf-result-store-tag { font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 50px; white-space: nowrap; }
+.rf-divider { height: 1px; margin: 14px 0; opacity: .3; }
+.rf-steps-lbl { font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 10px; opacity: .65; }
+.rf-step-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 14px; font-weight: 500; }
+.rf-step-row:last-child { margin-bottom: 0; }
+.rf-snum { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+.rf-note-box { margin-top: 14px; padding: 12px 14px; font-size: 13px; font-weight: 500; line-height: 1.65; border-left: 3px solid; border-radius: 0 8px 8px 0; display: flex; gap: 8px; align-items: flex-start; }
+.rf-reset { display: none; margin-top: 16px; font-size: 13px; color: var(--text3); background: none; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: 600; transition: all .12s; }
+.rf-reset:hover { color: var(--text); border-color: var(--border2); background: var(--bg); }
+.rf-loading { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text3); padding: 6px 0; font-weight: 500; }
+
 @media (max-width: 768px) {
   .info-grid { grid-template-columns: 1fr 1fr; }
   .fgrid { grid-template-columns: 1fr; }
@@ -292,6 +342,7 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
     <div class="nav-tabs">
       <div class="nav-tab active" onclick="switchPage('list')">매장 목록</div>
       <div class="nav-tab" onclick="switchPage('schedule')">운송 일정</div>
+      <div class="nav-tab" onclick="switchPage('refund')">환불 주체 확인</div>
     </div>
     <div class="nav-right">
       <button class="btn-admin" onclick="switchPage('admin')">
@@ -368,12 +419,65 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
   </div>
 </div>
 
+<!-- PAGE: REFUND -->
+<div id="page-refund" class="page">
+  <div class="refund-wrap">
+    <div class="refund-card">
+      <div class="refund-card-hd">
+        <div class="refund-card-icon">↩</div>
+        <div>
+          <div class="refund-card-title">환불 주체 확인</div>
+          <div class="refund-card-sub">매장 · 기기 · 결제수단을 선택하면 환불 절차를 안내합니다</div>
+        </div>
+      </div>
+
+      <div class="rf-section" id="rf-sec-store">
+        <div class="rf-label"><span class="rf-step-num" id="rf-b1">1</span> 매장 검색</div>
+        <div id="rf-loading" class="rf-loading">⏳ 매장 데이터 불러오는 중...</div>
+        <div class="rf-search-wrap" id="rf-search-wrap" style="display:none;">
+          <div class="rf-search-row">
+            <span class="si">🔍</span>
+            <input type="text" id="rf-store-input" placeholder="매장명을 입력하세요..." oninput="rfOnSearch()" autocomplete="off">
+            <button class="rf-clear" id="rf-clear-btn" onclick="rfClearSearch()">✕</button>
+          </div>
+          <div class="rf-dropdown" id="rf-dropdown"></div>
+        </div>
+        <div id="rf-selected-store" style="display:none;"></div>
+      </div>
+
+      <div class="rf-section" id="rf-sec-device" style="display:none;">
+        <div class="rf-label"><span class="rf-step-num" id="rf-b2">2</span> 사용 기기</div>
+        <div class="rf-chip-row">
+          <button class="rf-chip" id="rfdev-드라이스테이션" onclick="rfSelectDevice('드라이스테이션')">🧺 드라이스테이션</button>
+          <button class="rf-chip" id="rfdev-건조기" onclick="rfSelectDevice('건조기')">💨 건조기</button>
+          <button class="rf-chip" id="rfdev-세탁기" onclick="rfSelectDevice('세탁기')">🫧 세탁기</button>
+          <button class="rf-chip" id="rfdev-자판기" onclick="rfSelectDevice('자판기')">🏪 자판기</button>
+          <button class="rf-chip dashed" id="rfdev-잔여론디페이" onclick="rfSelectDevice('잔여론디페이')">📱 잔여 론디페이 환불</button>
+        </div>
+      </div>
+
+      <div class="rf-section" id="rf-sec-payment" style="display:none;">
+        <div class="rf-label"><span class="rf-step-num" id="rf-b3">3</span> 결제 수단</div>
+        <div class="rf-chip-row">
+          <button class="rf-chip" id="rfpay-카드" onclick="rfSelectPayment('카드')">💳 카드</button>
+          <button class="rf-chip" id="rfpay-현금" onclick="rfSelectPayment('현금')">💵 현금</button>
+          <button class="rf-chip" id="rfpay-론디페이" onclick="rfSelectPayment('론디페이')">📱 론디페이</button>
+          <button class="rf-chip" id="rfpay-지역화폐" onclick="rfSelectPayment('지역화폐')">📍 지역화폐</button>
+        </div>
+      </div>
+
+      <div id="rf-result" class="rf-result"></div>
+      <button class="rf-reset" id="rf-reset-btn" onclick="rfFullReset()">↺ 처음부터 다시</button>
+    </div>
+  </div>
+</div>
+
 <!-- PAGE: ADMIN -->
 <div id="page-admin" class="page">
   <div class="admin-inner">
     <div class="admin-hd">
       <h2>어드민 관리</h2>
-      <p>매장 추가·수정·삭제 및 운송 일정을 관리합니다. 변경사항은 <strong>Supabase에 저장</strong>되어 모든 팀원과 실시간 공유됩니다.</p>
+      <p>매장 추가·수정·삭제 및 운송 일정을 관리합니다. 변경사항은 <strong>별도 DB에 저장</strong>되어 모든 팀원과 실시간 공유됩니다.</p>
     </div>
     <div class="admin-tabs">
       <div class="atab active" onclick="switchAtab('store')">📋 매장 관리</div>
@@ -395,27 +499,48 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
       <ul class="astore-list" id="alist"></ul>
       <div class="edit-card" id="edit-card" style="display:none">
         <div class="edit-card-title" id="edit-card-title">✏️ 매장 정보 수정</div>
-        <div class="fgrid">
-          <div class="fg"><label>매장명 *</label><input type="text" id="f-name" placeholder="예: 강남역점"></div>
-          <div class="fg"><label>직영/일반</label><select id="f-type"><option>일반</option><option>직영</option><option>일반/직영</option></select></div>
-          <div class="fg"><label>론디원 여부</label><select id="f-rondi"><option>론디원</option><option>비론디원</option></select></div>
-          <div class="fg"><label>매장 형태</label><select id="f-stype"><option>복합형</option><option>드라이only</option><option>셀프only</option></select></div>
-          <div class="fg"><label>라인</label><input type="text" id="f-line" placeholder="예: A, B, C..."></div>
-          <div class="fg"><label>방문 주기</label><select id="f-freq"><option>매일</option><option>격일</option><option>부산/대구</option><option>대전</option><option>셀프only</option><option>시트 미등록</option></select></div>
-          <div class="fg"><label>오픈/양수일자</label><input type="date" id="f-open"></div>
-          <div class="fg"><label>셀프장비 보증 만료</label><input type="date" id="f-sw"></div>
-          <div class="fg"><label>드라이 보증 만료</label><input type="date" id="f-dw"></div>
-          <div class="fg"><label>셀프장비 A/S</label><input type="text" id="f-as" placeholder="예: 유니룩스"></div>
-          <div class="fg"><label>드라이스테이션 출장비</label><select id="f-dry"><option>발생</option><option>미발생</option></select></div>
-          <div class="fg"><label>키오스크 버전</label><select id="f-kiosk"><option value="">없음</option><option value="V1">V1</option><option value="V2">V2</option></select></div>
-          <div class="fg full"><label>🅿️ 주차 정보</label><textarea id="f-parking" rows="3" placeholder="예: 지하 1층 무료 2시간&#10;아이디: laundry / 비밀번호: 1234&#10;엔터로 줄바꿈 가능"></textarea></div>
-          <div class="fg full"><label>🅿️ 주차 등록 링크 (있는 경우만)</label><input type="url" id="f-parking-url" placeholder="https://..."></div>
-          <div class="fg full"><label>📷 CCTV 정보</label><textarea id="f-cctv" rows="2" placeholder="예: 4채널 / 업체명&#10;엔터로 줄바꿈 가능"></textarea></div>
-          <div class="fg full"><label>📷 CCTV 링크 (있는 경우만)</label><input type="url" id="f-cctv-url" placeholder="https://..."></div>
-          <div class="fg full"><label>📌 매장 특이사항</label><textarea id="f-sn" rows="3" placeholder="고객 응대 시 참고 사항을 입력하세요"></textarea></div>
-          <div class="fg full"><label>점주 특이사항</label><textarea id="f-on" rows="3" placeholder="점주 관련 참고 사항을 입력하세요"></textarea></div>
+
+        <!-- 탭 -->
+        <div style="display:flex;border-bottom:2px solid var(--border);margin-bottom:20px;gap:0;">
+          <div id="etab-store" onclick="switchEtab('store')" style="padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid var(--accent);margin-bottom:-2px;color:var(--accent);">매장 정보 수정</div>
+          <div id="etab-refund" onclick="switchEtab('refund')" style="padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text3);">↩ 환불 설정</div>
         </div>
-        <div class="edit-actions">
+
+        <!-- 매장 정보 패널 -->
+        <div id="epanel-store">
+          <div class="fgrid">
+            <div class="fg"><label>매장명 *</label><input type="text" id="f-name" placeholder="예: 강남역점"></div>
+            <div class="fg"><label>직영/일반</label><select id="f-type"><option>일반</option><option>직영</option><option>일반/직영</option></select></div>
+            <div class="fg"><label>론디원 여부</label><select id="f-rondi"><option>론디원</option><option>비론디원</option></select></div>
+            <div class="fg"><label>매장 형태</label><select id="f-stype"><option>복합형</option><option>드라이only</option><option>셀프only</option></select></div>
+            <div class="fg"><label>라인</label><input type="text" id="f-line" placeholder="예: A, B, C..."></div>
+            <div class="fg"><label>방문 주기</label><select id="f-freq"><option>매일</option><option>격일</option><option>부산/대구</option><option>대전</option><option>셀프only</option><option>시트 미등록</option></select></div>
+            <div class="fg"><label>오픈/양수일자</label><input type="date" id="f-open"></div>
+            <div class="fg"><label>셀프장비 보증 만료</label><input type="date" id="f-sw"></div>
+            <div class="fg"><label>드라이 보증 만료</label><input type="date" id="f-dw"></div>
+            <div class="fg"><label>셀프장비 A/S</label><input type="text" id="f-as" placeholder="예: 유니룩스"></div>
+            <div class="fg"><label>드라이스테이션 출장비</label><select id="f-dry"><option>발생</option><option>미발생</option></select></div>
+            <div class="fg"><label>키오스크 버전</label><select id="f-kiosk"><option value="">없음</option><option value="V1">V1</option><option value="V2">V2</option></select></div>
+            <div class="fg full"><label>🅿️ 주차 정보</label><textarea id="f-parking" rows="3" placeholder="예: 지하 1층 무료 2시간&#10;아이디: laundry / 비밀번호: 1234&#10;엔터로 줄바꿈 가능"></textarea></div>
+            <div class="fg full"><label>🅿️ 주차 등록 링크 (있는 경우만)</label><input type="url" id="f-parking-url" placeholder="https://..."></div>
+            <div class="fg full"><label>📷 CCTV 정보</label><textarea id="f-cctv" rows="2" placeholder="예: 4채널 / 업체명&#10;엔터로 줄바꿈 가능"></textarea></div>
+            <div class="fg full"><label>📷 CCTV 링크 (있는 경우만)</label><input type="url" id="f-cctv-url" placeholder="https://..."></div>
+            <div class="fg full"><label>📌 매장 특이사항</label><textarea id="f-sn" rows="3" placeholder="고객 응대 시 참고 사항을 입력하세요"></textarea></div>
+            <div class="fg full"><label>점주 특이사항</label><textarea id="f-on" rows="3" placeholder="점주 관련 참고 사항을 입력하세요"></textarea></div>
+          </div>
+        </div>
+
+        <!-- 환불 설정 패널 -->
+        <div id="epanel-refund" style="display:none;">
+          <div class="fgrid">
+            <div class="fg"><label>카드 취소 가능</label><select id="f-card-cancel"><option value="true">가능</option><option value="false">불가 (현금입금 전용)</option></select></div>
+            <div class="fg"><label>지역화폐 사용 가능</label><select id="f-local-currency"><option value="true">가능</option><option value="false">불가</option></select></div>
+            <div class="fg"><label>셀프장비 고객센터 안내 여부</label><select id="f-self-managed"><option value="true">안내 중</option><option value="false">미안내</option></select></div>
+            <div class="fg full"><label>환불 특이사항 <span style="font-weight:500;color:var(--text3);">(결과 화면에 표시)</span></label><textarea id="f-refund-note" rows="3" placeholder="예: 카드 결제건은 본사입금 1차 처리 후 고객 거절 시 카드취소&#10;예: 이지페이에서 취소 필요"></textarea></div>
+          </div>
+        </div>
+
+        <div class="edit-actions" style="margin-top:20px;">
           <button class="btn-save" id="btn-form-save" onclick="saveStore()">저장하기</button>
           <button class="btn-cancel-edit" onclick="closeEditForm()">취소</button>
           <span class="saved-msg" id="save-msg">✓ 저장되었습니다</span>
@@ -540,6 +665,10 @@ function rowToStore(r) {
     kiosk: r.kiosk || '', storeNote: r.store_note || '',
     ownerNote: r.owner_note || '', parking: r.parking || '',
     parkingUrl: r.parking_url || '', cctv: r.cctv || '', cctvUrl: r.cctv_url || '', _id: r.id,
+    cardCancelPossible: r.card_cancel_possible !== false,
+    localCurrencyAvailable: r.local_currency_available !== false,
+    selfDeviceManaged: r.self_device_managed !== false,
+    refundNote: r.refund_note || '',
   };
 }
 
@@ -555,6 +684,10 @@ function storeToRow(s) {
     card_reader: s.cardReader, kiosk: s.kiosk,
     store_note: s.storeNote, owner_note: s.ownerNote,
     parking: s.parking, parking_url: s.parkingUrl, cctv: s.cctv, cctv_url: s.cctvUrl,
+    card_cancel_possible: s.cardCancelPossible !== false,
+    local_currency_available: s.localCurrencyAvailable !== false,
+    self_device_managed: s.selfDeviceManaged !== false,
+    refund_note: s.refundNote || null,
     updated_at: new Date().toISOString(),
   };
 }
@@ -938,10 +1071,11 @@ function switchPage(p) {
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
   document.getElementById('page-' + p).classList.add('active');
-  const idx = { list: 0, schedule: 1 };
+  const idx = { list: 0, schedule: 1, refund: 2 };
   if (idx[p] !== undefined) document.querySelectorAll('.nav-tab')[idx[p]]?.classList.add('active');
   if (p === 'schedule') renderSchedDisplay();
   if (p === 'admin') { renderAlist(); renderSchedEditTable(); }
+  if (p === 'refund' && rfStores.length === 0) loadRefundStores();
 }
 
 // ============================================================
@@ -995,6 +1129,7 @@ function selectStore(i) {
   document.getElementById('btn-form-save').textContent = '저장하기';
   document.getElementById('edit-card').className = 'edit-card';
   fillForm(s);
+  switchEtab('store');
   showEditCard();
 }
 
@@ -1006,7 +1141,8 @@ function openNewStoreForm() {
   document.getElementById('btn-form-save').textContent = '매장 추가';
   document.getElementById('edit-card').className = 'edit-card is-new';
   // 빈 폼
-  fillForm({ name:'', type:'일반', rondiOne:'론디원', storeType:'복합형', line:'', frequency:'격일', openDate:'', selfWarranty:'', dryWarranty:'', selfAS:'', dryStation:'발생', kiosk:'', parking:'', parkingUrl:'', cctv:'', cctvUrl:'', storeNote:'', ownerNote:'' });
+  fillForm({ name:'', type:'일반', rondiOne:'론디원', storeType:'복합형', line:'', frequency:'격일', openDate:'', selfWarranty:'', dryWarranty:'', selfAS:'', dryStation:'발생', kiosk:'', parking:'', parkingUrl:'', cctv:'', cctvUrl:'', storeNote:'', ownerNote:'', cardCancelPossible:true, localCurrencyAvailable:true, selfDeviceManaged:true, refundNote:'' });
+  switchEtab('store');
   showEditCard();
 }
 
@@ -1029,6 +1165,10 @@ function fillForm(s) {
   document.getElementById('f-cctv-url').value = s.cctvUrl || '';
   document.getElementById('f-sn').value = s.storeNote || '';
   document.getElementById('f-on').value = s.ownerNote || '';
+  document.getElementById('f-card-cancel').value = s.cardCancelPossible === false ? 'false' : 'true';
+  document.getElementById('f-local-currency').value = s.localCurrencyAvailable === false ? 'false' : 'true';
+  document.getElementById('f-self-managed').value = s.selfDeviceManaged === false ? 'false' : 'true';
+  document.getElementById('f-refund-note').value = s.refundNote || '';
   document.getElementById('save-msg').classList.remove('show');
 }
 
@@ -1075,6 +1215,10 @@ async function saveStore() {
     cctvUrl: document.getElementById('f-cctv-url').value.trim(),
     storeNote: document.getElementById('f-sn').value.trim(),
     ownerNote: document.getElementById('f-on').value.trim(),
+    cardCancelPossible: document.getElementById('f-card-cancel').value !== 'false',
+    localCurrencyAvailable: document.getElementById('f-local-currency').value !== 'false',
+    selfDeviceManaged: document.getElementById('f-self-managed').value !== 'false',
+    refundNote: document.getElementById('f-refund-note').value.trim(),
   };
 
   try {
@@ -1178,7 +1322,7 @@ async function saveSched() {
   }
 }
 
-const SCHED_PASSWORD = 'PASSWORD_HERE';
+const SCHED_PASSWORD = '15444335';
 let schedUnlocked = false;
 
 function openPwModal() {
@@ -1214,6 +1358,17 @@ function checkPassword() {
   }
 }
 
+function switchEtab(t) {
+  document.getElementById('epanel-store').style.display = t === 'store' ? 'block' : 'none';
+  document.getElementById('epanel-refund').style.display = t === 'refund' ? 'block' : 'none';
+  const storeTab = document.getElementById('etab-store');
+  const refundTab = document.getElementById('etab-refund');
+  storeTab.style.borderBottomColor = t === 'store' ? 'var(--accent)' : 'transparent';
+  storeTab.style.color = t === 'store' ? 'var(--accent)' : 'var(--text3)';
+  refundTab.style.borderBottomColor = t === 'refund' ? 'var(--accent)' : 'transparent';
+  refundTab.style.color = t === 'refund' ? 'var(--accent)' : 'var(--text3)';
+}
+
 function switchAtab(t) {
   if (t === 'sched' && !schedUnlocked) {
     openPwModal();
@@ -1236,6 +1391,185 @@ document.addEventListener('keydown', e => {
 window.addEventListener('scroll', () => {
   document.getElementById('top-btn').classList.toggle('visible', window.scrollY > 300);
 });
+
+// ============================================================
+// REFUND: 환불 주체 확인
+// ============================================================
+const RF_CARD_DEVICES = new Set(['건조기','세탁기','자판기']);
+let rfStores = [], rfSelected = null, rfDevice = null, rfPayment = null;
+
+async function loadRefundStores() {
+  try {
+    const res = await sbFetch('stores?select=id,no,name,type,rondi_one,card_cancel_possible,local_currency_available,self_device_managed,refund_note&order=no');
+    rfStores = res;
+    document.getElementById('rf-loading').style.display = 'none';
+    document.getElementById('rf-search-wrap').style.display = 'block';
+  } catch(e) {
+    document.getElementById('rf-loading').innerHTML = '❌ 매장 데이터를 불러오지 못했어요. 새로고침 해주세요.';
+  }
+}
+
+function rfIsRondi(s) { return s.rondi_one === '론디원'; }
+
+function rfOnSearch() {
+  const q = document.getElementById('rf-store-input').value.trim();
+  const dd = document.getElementById('rf-dropdown');
+  document.getElementById('rf-clear-btn').style.display = q ? 'block' : 'none';
+  if (!q) { dd.classList.remove('open'); return; }
+  const hits = rfStores.filter(s => s.name.includes(q)).slice(0, 8);
+  if (!hits.length) {
+    dd.innerHTML = '<div class="rf-dd-item" style="color:var(--text3);">검색 결과 없음</div>';
+    dd.classList.add('open'); return;
+  }
+  dd.innerHTML = hits.map(s => {
+    const rondiTag = rfIsRondi(s)
+      ? `<span class="rf-pill" style="background:var(--accent-light);color:var(--accent);">론디원</span>`
+      : `<span class="rf-pill" style="background:#fff7ed;color:#c2410c;">비론디원</span>`;
+    const cashTag = s.card_cancel_possible === false
+      ? `<span class="rf-pill" style="background:#fee2e2;color:#b91c1c;">현금전용</span>` : '';
+    return `<div class="rf-dd-item" onclick="rfPickStore(${s.id})"><span>${s.name}</span><div class="rf-dd-badges">${rondiTag}${cashTag}</div></div>`;
+  }).join('');
+  dd.classList.add('open');
+}
+
+function rfPickStore(id) {
+  rfSelected = rfStores.find(s => s.id === id);
+  rfDevice = null; rfPayment = null;
+  document.getElementById('rf-store-input').value = rfSelected.name;
+  document.getElementById('rf-clear-btn').style.display = 'block';
+  document.getElementById('rf-dropdown').classList.remove('open');
+  const rondi = rfIsRondi(rfSelected);
+  const rc = rondi ? 'background:var(--accent-light);color:var(--accent);' : 'background:#fff7ed;color:#c2410c;';
+  const tags = [
+    `<span class="rf-pill" style="background:var(--bg);color:var(--text3);border:1px solid var(--border);">${rfSelected.type}</span>`,
+    `<span class="rf-pill" style="${rc}">${rondi ? '론디원' : '비론디원'}</span>`,
+    rfSelected.card_cancel_possible === false ? `<span class="rf-pill" style="background:#fee2e2;color:#b91c1c;">현금입금 전용</span>` : '',
+    rfSelected.self_device_managed === false ? `<span class="rf-pill" style="background:#fff7ed;color:#c2410c;">⚠️ 셀프장비 미안내</span>` : '',
+  ].filter(Boolean).join('');
+  document.getElementById('rf-selected-store').innerHTML =
+    `<div class="rf-selected-store"><div class="rf-store-name">${rfSelected.name}</div><div class="rf-store-tags">${tags}</div></div>`;
+  document.getElementById('rf-selected-store').style.display = 'block';
+  document.getElementById('rf-b1').classList.add('done');
+  document.getElementById('rf-sec-device').style.display = 'block';
+  document.querySelectorAll('[id^="rfdev-"]').forEach(c => c.classList.remove('on'));
+  document.getElementById('rf-sec-payment').style.display = 'none';
+  document.getElementById('rf-result').classList.remove('show');
+  document.getElementById('rf-reset-btn').style.display = 'none';
+}
+
+function rfClearSearch() {
+  document.getElementById('rf-store-input').value = '';
+  document.getElementById('rf-clear-btn').style.display = 'none';
+  document.getElementById('rf-dropdown').classList.remove('open');
+  document.getElementById('rf-selected-store').style.display = 'none';
+  document.getElementById('rf-sec-device').style.display = 'none';
+  document.getElementById('rf-sec-payment').style.display = 'none';
+  document.getElementById('rf-result').classList.remove('show');
+  document.getElementById('rf-b1').classList.remove('done');
+  document.getElementById('rf-reset-btn').style.display = 'none';
+  rfSelected = null; rfDevice = null; rfPayment = null;
+}
+
+function rfSelectDevice(dev) {
+  rfDevice = dev; rfPayment = null;
+  document.querySelectorAll('[id^="rfdev-"]').forEach(c => c.classList.remove('on'));
+  document.getElementById('rfdev-' + dev).classList.add('on');
+  document.getElementById('rf-b2').classList.add('done');
+  document.getElementById('rf-result').classList.remove('show');
+  document.getElementById('rf-reset-btn').style.display = 'none';
+  if (dev === '잔여론디페이') {
+    document.getElementById('rf-sec-payment').style.display = 'none';
+    rfCalc(); return;
+  }
+  const isNonRondi = !rfIsRondi(rfSelected);
+  document.getElementById('rfpay-카드').style.display = '';
+  document.getElementById('rfpay-현금').style.display = dev === '드라이스테이션' ? 'none' : '';
+  document.getElementById('rfpay-론디페이').style.display = (RF_CARD_DEVICES.has(dev) && isNonRondi) ? 'none' : '';
+  document.getElementById('rfpay-지역화폐').style.display = rfSelected.local_currency_available === false ? 'none' : '';
+  document.querySelectorAll('[id^="rfpay-"]').forEach(c => c.classList.remove('on'));
+  document.getElementById('rf-sec-payment').style.display = 'block';
+}
+
+function rfSelectPayment(pay) {
+  rfPayment = pay;
+  document.querySelectorAll('[id^="rfpay-"]').forEach(c => c.classList.remove('on'));
+  document.getElementById('rfpay-' + pay).classList.add('on');
+  document.getElementById('rf-b3').classList.add('done');
+  rfCalc();
+}
+
+function rfCalc() {
+  if (!rfSelected || !rfDevice) return;
+  const rondi = rfIsRondi(rfSelected);
+  const isCashOnly = rfSelected.card_cancel_possible === false;
+  const CT = { bg:'#e6f7f5', border:'#00a991', text:'#065f46', s1:'#00a991', s1t:'#fff', s2:'#9FE1CB', s2t:'#065f46', ntBorder:'#00a991', ntBg:'#e6f7f5', ntText:'#065f46' };
+  const CA = { bg:'#fff7ed', border:'#f59e0b', text:'#92400e', s1:'#f59e0b', s1t:'#fff', s2:'#fde68a', s2t:'#78350f', ntBorder:'#f59e0b', ntBg:'#fffbeb', ntText:'#78350f' };
+
+  if (rfDevice === '잔여론디페이') {
+    const isBonsa = rondi;
+    const c = isBonsa ? CT : CA;
+    rfShowResult(isBonsa, c, `
+      <div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>카드 취소 <span style="font-size:12px;opacity:.7;">(론디페이 사용 이력 없을 경우)</span></div></div>
+      <div class="rf-step-row"><div class="rf-snum" style="background:${c.s2};color:${c.s2t};">2</div><div>계좌 입금 <span style="font-size:12px;opacity:.7;">(론디페이 사용 이력 있을 경우)</span></div></div>`);
+    return;
+  }
+  if (!rfPayment) return;
+
+  let isBonsa = false;
+  if (rondi) { isBonsa = !(rfPayment === '현금' || rfPayment === '지역화폐'); }
+  else { isBonsa = rfDevice === '드라이스테이션'; }
+  const c = isBonsa ? CT : CA;
+
+  let steps = '';
+  if (isBonsa) {
+    if (rfPayment === '카드' && RF_CARD_DEVICES.has(rfDevice)) {
+      steps = `
+        <div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>론디페이로 환불 제안</div></div>
+        <div class="rf-step-row"><div class="rf-snum" style="background:${c.s2};color:${c.s2t};">2</div><div>고객이 거절 시 → <strong>망치에서 카드 취소 가능</strong></div></div>`;
+    } else if (rfPayment === '론디페이' && RF_CARD_DEVICES.has(rfDevice)) {
+      steps = `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>결제한 론디페이 금액 재지급</div></div>`;
+    } else {
+      steps = `
+        <div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>론디페이로 환불 제안</div></div>
+        <div class="rf-step-row"><div class="rf-snum" style="background:${c.s2};color:${c.s2t};">2</div><div>고객이 거절 시 → <strong>본사 계좌 입금</strong>으로 처리</div></div>`;
+    }
+  } else {
+    if (rfPayment === '현금') steps = `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>현금 지급</div></div>`;
+    else if (rfPayment === '지역화폐') steps = `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>지역화폐 환불</div></div>`;
+    else if (rfPayment === '론디페이') steps = `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>결제한 론디페이 금액 재지급</div></div>`;
+    else steps = isCashOnly
+      ? `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>현금 입금 <span style="font-size:12px;opacity:.7;">(카드 취소 불가 매장)</span></div></div>`
+      : `<div class="rf-step-row"><div class="rf-snum" style="background:${c.s1};color:${c.s1t};">1</div><div>카드 취소</div></div>`;
+  }
+  rfShowResult(isBonsa, c, steps);
+}
+
+function rfShowResult(isBonsa, c, stepsHtml) {
+  const note = rfSelected.refund_note && !['NULL','EMPTY',''].includes(rfSelected.refund_note)
+    ? `<div class="rf-note-box" style="border-left-color:${c.ntBorder};background:${c.ntBg};color:${c.ntText};">ℹ️ <span style="white-space:pre-line;">${rfSelected.refund_note}</span></div>` : '';
+  const el = document.getElementById('rf-result');
+  el.innerHTML = `
+    <div class="rf-result-top">
+      <div>
+        <div class="rf-result-label" style="color:${c.text};">환불 주체</div>
+        <div class="rf-result-owner" style="color:${c.text};">${isBonsa ? '본사 환불' : '점주 환불'}</div>
+      </div>
+      <div class="rf-result-store-tag" style="background:${c.bg};color:${c.text};border:1.5px solid ${c.border};">${rfSelected.name}</div>
+    </div>
+    <div class="rf-divider" style="background:${c.border};"></div>
+    <div class="rf-steps-lbl" style="color:${c.text};">환불 절차</div>
+    ${stepsHtml}${note}`;
+  el.style.background = c.bg;
+  el.style.borderColor = c.border;
+  el.classList.add('show');
+  document.getElementById('rf-reset-btn').style.display = 'block';
+}
+
+function rfFullReset() {
+  rfClearSearch();
+  document.getElementById('rf-store-input').focus();
+}
+
 loadData();
 </script>
 <!-- 비밀번호 모달 -->
