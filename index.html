@@ -1799,11 +1799,19 @@ async function openRefundForm() {
     document.getElementById('rondi-alert-overlay').style.display = 'flex';
     return;
   }
-  // 론디원 + 카드 결제 시 접수 불가 경고
+  // 론디원 + 카드 결제 시 경고 (예외 체크박스 있음)
   if (rfIsRondi(rfSelected) && rfPayment === '카드') {
+    document.getElementById('rondi-card-exception-check').checked = false;
+    document.getElementById('rondi-card-proceed-btn').disabled = true;
+    document.getElementById('rondi-card-proceed-btn').style.background = 'var(--border2)';
+    document.getElementById('rondi-card-proceed-btn').style.cursor = 'not-allowed';
     document.getElementById('rondi-card-alert-overlay').style.display = 'flex';
     return;
   }
+  await _openRefundFormCore();
+}
+
+async function _openRefundFormCore() {
 
   // 입금일 Supabase에서 로드
   let payDate = null;
@@ -2248,6 +2256,28 @@ function openRefundDetail(id) {
   document.getElementById('refund-detail-overlay').style.display = 'flex';
 }
 
+function closeRondiCardAlert() {
+  document.getElementById('rondi-card-alert-overlay').style.display = 'none';
+  document.getElementById('rondi-card-exception-check').checked = false;
+  document.getElementById('rondi-card-proceed-btn').disabled = true;
+  document.getElementById('rondi-card-proceed-btn').style.background = 'var(--border2)';
+  document.getElementById('rondi-card-proceed-btn').style.cursor = 'not-allowed';
+}
+
+function onRondiCardExceptionChange() {
+  const checked = document.getElementById('rondi-card-exception-check').checked;
+  const btn = document.getElementById('rondi-card-proceed-btn');
+  btn.disabled = !checked;
+  btn.style.background = checked ? 'var(--accent)' : 'var(--border2)';
+  btn.style.cursor = checked ? 'pointer' : 'not-allowed';
+}
+
+async function proceedRondiCardException() {
+  closeRondiCardAlert();
+  // 론디페이 거부 현금지급 예외로 openRefundForm 직접 실행 (카드 체크 우회)
+  await _openRefundFormCore();
+}
+
 function showConfirmModal(title, desc, onConfirm) {
   document.getElementById('custom-confirm-title').textContent = title;
   document.getElementById('custom-confirm-desc').textContent = desc;
@@ -2353,11 +2383,18 @@ loadData();
   <div style="background:var(--white);border-radius:16px;padding:28px 28px 22px;max-width:360px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center;">
     <div style="width:52px;height:52px;background:#fff7ed;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px;">⚠️</div>
     <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:10px;">카드 결제 건 안내</div>
-    <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:22px;">
+    <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:18px;">
       망치에서 <strong>카드 취소 가능한 건</strong>입니다.<br>
       론디페이 환불 미수긍 시 <strong>카드 취소</strong>해 주세요.
     </div>
-    <button onclick="document.getElementById('rondi-card-alert-overlay').style.display='none'" style="width:100%;padding:12px;background:var(--accent);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">확인</button>
+    <label style="display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;margin-bottom:16px;text-align:left;">
+      <input type="checkbox" id="rondi-card-exception-check" style="width:18px;height:18px;cursor:pointer;flex-shrink:0;" onchange="onRondiCardExceptionChange()">
+      <span style="font-size:13px;font-weight:600;color:var(--text);line-height:1.5;">론디페이 지급 거부로<br>현금 지급이 필요합니다</span>
+    </label>
+    <div style="display:flex;gap:8px;">
+      <button onclick="closeRondiCardAlert()" style="flex:1;padding:12px;background:var(--bg);color:var(--text2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">닫기</button>
+      <button id="rondi-card-proceed-btn" onclick="proceedRondiCardException()" disabled style="flex:1;padding:12px;background:var(--border2);color:var(--white);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:not-allowed;font-family:inherit;transition:all .15s;">접수하기</button>
+    </div>
   </div>
 </div>
 
