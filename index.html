@@ -1764,6 +1764,17 @@ async function addPaymentDate() {
   renderPaymentDateList();
 }
 
+async function markPaymentDateSubmitted(date) {
+  showConfirmModal(
+    '상신 완료 처리',
+    `${date} 입금일 상신을 완료 처리할까요?\n목록에서 제거되고 다음 입금일로 자동 전환됩니다.`,
+    async () => {
+      await removePaymentDate(date);
+      showToast('상신 완료 처리되었습니다');
+    }
+  );
+}
+
 async function removePaymentDate(date) {
   let dates = await getPaymentDates();
   dates = dates.filter(d => d !== date);
@@ -1781,9 +1792,13 @@ async function renderPaymentDateList() {
   }
   wrap.innerHTML = dates.map(d => {
     const isNext = d >= todayStr && d === dates.find(x => x >= todayStr);
+    const submitBtn = isNext
+      ? `<button onclick="markPaymentDateSubmitted('${d}')" style="background:rgba(255,255,255,.25);border:none;border-radius:999px;cursor:pointer;color:inherit;font-size:12px;font-weight:700;line-height:1;padding:4px 10px;margin-left:2px;">상신 완료</button>`
+      : '';
     return `<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;
       ${isNext ? 'background:var(--accent);color:white;' : 'background:var(--white);border:1.5px solid var(--border);color:var(--text2);'}">
       ${isNext ? ' ' : ''}${d}${isNext ? ' (다음)' : ''}
+      ${submitBtn}
       <button onclick="removePaymentDate('${d}')" style="background:none;border:none;cursor:pointer;color:inherit;opacity:.7;font-size:14px;line-height:1;padding:0;">✕</button>
     </span>`;
   }).join('');
@@ -1797,7 +1812,7 @@ async function getNextPaymentDate() {
   const dates = await getPaymentDates();
   const todayStr = new Date().toISOString().split('T')[0];
   const future = dates.filter(d => d >= todayStr);
-  return future.length ? future[0] : (dates.length ? dates[dates.length - 1] : null);
+  return future.length ? future[0] : null;
 }
 
 // 환불 방법 결정
