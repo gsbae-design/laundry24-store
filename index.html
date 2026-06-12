@@ -673,14 +673,21 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
     </div>
 
     <!-- 입금일 설정 -->
-    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:12px;">입금일 설정 <span style="font-size:12px;font-weight:500;color:var(--text3);">(재무부 전달 시 추가/관리)</span></div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
-        <input type="date" id="admin-payment-date" style="padding:8px 12px;border:1.5px solid var(--border2);border-radius:8px;font-size:14px;font-family:inherit;">
-        <button onclick="addPaymentDate()" style="padding:8px 16px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">+ 추가</button>
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:260px;">
+        <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:12px;">입금일 설정 <span style="font-size:12px;font-weight:500;color:var(--text3);">(재무부 전달 시 추가/관리)</span></div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+          <input type="date" id="admin-payment-date" style="padding:8px 12px;border:1.5px solid var(--border2);border-radius:8px;font-size:14px;font-family:inherit;">
+          <button onclick="addPaymentDate()" style="padding:8px 16px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">+ 추가</button>
+        </div>
+        <div id="admin-payment-date-list" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:10px;">가장 가까운 미래 입금일이 환불 접수 폼에 "다음 입금일"로 표시됩니다.</div>
       </div>
-      <div id="admin-payment-date-list" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
-      <div style="font-size:12px;color:var(--text3);margin-top:10px;">가장 가까운 미래 입금일이 환불 접수 폼에 "다음 입금일"로 표시됩니다.</div>
+      <div style="flex-shrink:0;text-align:right;padding-top:2px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text3);margin-bottom:6px;">다음 상신예정일</div>
+        <div id="next-shinsin-date" style="font-size:20px;font-weight:800;color:var(--accent);">-</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">다음 입금일로부터 3영업일 전</div>
+      </div>
     </div>
 
     <!-- 필터 + 통계 -->
@@ -713,7 +720,8 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
               <th style="padding:8px 10px;white-space:nowrap;">환불방법</th>
               <th style="padding:8px 10px;white-space:nowrap;">금액</th>
               <th style="padding:8px 10px;white-space:nowrap;">고객번호</th>
-              <th style="padding:8px 10px;white-space:nowrap;cursor:pointer;user-select:none;" onclick="toggleSort('상신예정일')">상신예정일 <span id="sort-icon-상신예정일">↕</span></th>
+              <th style="padding:8px 10px;white-space:nowrap;">사유</th>
+              <th style="padding:8px 10px;white-space:nowrap;cursor:pointer;user-select:none;" onclick="toggleSort('상신예정일')">입금예정일 <span id="sort-icon-상신예정일">↕</span></th>
               <th style="padding:8px 10px;white-space:nowrap;">처리완료</th>
             </tr>
           </thead>
@@ -856,11 +864,11 @@ function storeToRow(s) {
 // ============================================================
 function showLoading(msg) {
   document.getElementById('store-tbody').innerHTML =
-    `<tr><td colspan="11" style="text-align:center;padding:60px;color:var(--text3);font-size:14px">⏳ ${msg}</td></tr>`;
+    `<tr><td colspan="12" style="text-align:center;padding:60px;color:var(--text3);font-size:14px">⏳ ${msg}</td></tr>`;
 }
 function showError(msg) {
   document.getElementById('store-tbody').innerHTML =
-    `<tr><td colspan="11" style="text-align:center;padding:60px;color:var(--danger);font-size:14px"> ${msg}<br><small style="color:var(--text3)">SUPABASE_URL과 SUPABASE_KEY를 확인해주세요.</small></td></tr>`;
+    `<tr><td colspan="12" style="text-align:center;padding:60px;color:var(--danger);font-size:14px"> ${msg}<br><small style="color:var(--text3)">SUPABASE_URL과 SUPABASE_KEY를 확인해주세요.</small></td></tr>`;
 }
 
 async function loadData() {
@@ -1739,6 +1747,19 @@ function rfFullReset() {
 // ============================================================
 
 // 입금일 목록 저장/로드 (Supabase settings 테이블, JSON 배열)
+// 3영업일 전 계산 (주말 제외)
+function calcShinsinDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  let count = 0;
+  while (count < 3) {
+    d.setDate(d.getDate() - 1);
+    const day = d.getDay();
+    if (day !== 0 && day !== 6) count++;
+  }
+  return d.toISOString().split('T')[0];
+}
+
 async function getPaymentDates() {
   try {
     const result = await sbFetch('settings?key=eq.paymentDates&select=value');
@@ -1793,6 +1814,9 @@ async function renderPaymentDateList() {
   const dates = await getPaymentDates();
   const todayStr = new Date().toISOString().split('T')[0];
   const wrap = document.getElementById('admin-payment-date-list');
+  const shinsinEl = document.getElementById('next-shinsin-date');
+  const future = dates.filter(d => d >= todayStr);
+  if (shinsinEl) shinsinEl.textContent = future.length ? calcShinsinDate(future[0]) : '-';
   if (!dates.length) {
     wrap.innerHTML = '<span style="font-size:13px;color:var(--text3);">등록된 입금일이 없습니다</span>';
     return;
@@ -2191,14 +2215,14 @@ function renderRefundList() {
 
   const tbody = document.getElementById('refund-list-tbody');
   if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:20px;color:var(--text3);">접수 내역이 없습니다</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:20px;color:var(--text3);">접수 내역이 없습니다</td></tr>';
   } else {
     let html = '';
     Object.keys(groups).sort((a,b) => b.localeCompare(a)).forEach(month => {
       const isCollapsed = collapsedMonths.has(month);
       const label = month === '날짜없음' ? '날짜 없음' : month.replace('-', '년 ') + '월';
       html += `<tr style="background:var(--bg);">
-        <td colspan="11" style="padding:8px 12px;font-size:12px;font-weight:800;color:var(--text2);cursor:pointer;user-select:none;" onclick="toggleMonth('${month}')">
+        <td colspan="12" style="padding:8px 12px;font-size:12px;font-weight:800;color:var(--text2);cursor:pointer;user-select:none;" onclick="toggleMonth('${month}')">
           ${isCollapsed ? '▶' : '▼'} ${label} (${groups[month].length}건)
         </td>
       </tr>`;
@@ -2209,11 +2233,12 @@ function renderRefundList() {
             <td style="padding:8px 10px;white-space:nowrap;">${r.접수일자 || '-'}</td>
             <td style="padding:8px 10px;">${r.담당자명 || '-'}</td>
             <td style="padding:8px 10px;font-weight:600;">${r.매장명 || '-'}</td>
-            <td style="padding:8px 10px;">${r.사용기기 || '-'}${r.기기번호 ? ' ' + r.기기번호 + '호' : ''}</td>
+            <td style="padding:8px 10px;">${r.사용기기 || '-'}${r.기기번호 ? ' ' + r.기기번호 : ''}</td>
             <td style="padding:8px 10px;">${r.결제수단 || '-'}</td>
             <td style="padding:8px 10px;">${r.환불방법 || '-'}</td>
             <td style="padding:8px 10px;">${r.최종취소금액 || r.최종환불금액 || '-'}</td>
             <td style="padding:8px 10px;">${r.고객번호 || '-'}</td>
+            <td style="padding:8px 10px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${(r.취소사유 || '').replace(/"/g, '&quot;')}">${r.취소사유 || '-'}</td>
             <td style="padding:8px 10px;white-space:nowrap;">${r.상신예정일 || '-'}</td>
             <td style="padding:8px 10px;text-align:center;" onclick="event.stopPropagation()">
               ${r.처리완료 ? '<span style="font-size:12px;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:999px;font-weight:700;">✅ 완료</span>' : ''}
@@ -2267,7 +2292,7 @@ function openRefundDetail(id) {
       row('접수일자', r.접수일자),
       row('담당자명', r.담당자명),
       row('매장명', r.매장명, true),
-      row('사용기기', r.사용기기 + (r.기기번호 ? ' ' + r.기기번호 + '호' : '')),
+      row('사용기기', r.사용기기 + (r.기기번호 ? ' ' + r.기기번호 : '')),
       row('결제수단', r.결제수단),
       row('환불방법', r.환불방법, true),
       row('고객번호', r.고객번호),
@@ -2292,7 +2317,7 @@ function openRefundDetail(id) {
       row('최종환불금액', r.최종환불금액 ? r.최종환불금액 + '원' : ''),
     ]) : ''}
     ${section('상신 정보', [
-      row('상신예정일', r.상신예정일),
+      row('입금예정일', r.상신예정일),
       `<div style="display:flex;gap:12px;padding:9px 14px;font-size:13px;align-items:center;">
         <span style="color:var(--text3);min-width:90px;flex-shrink:0;font-weight:500;">처리완료</span>
         ${shinsinBadge}
@@ -2323,6 +2348,8 @@ function efield(label, id, value, opts) {
     </select>`;
   } else if (opts.textarea) {
     input = `<textarea id="${id}" rows="2" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:8px;font-size:13px;font-family:inherit;resize:vertical;">${val}</textarea>`;
+  } else if (opts.date) {
+    input = `<input type="date" id="${id}" value="${val}" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:8px;font-size:13px;font-family:inherit;">`;
   } else {
     input = `<input type="text" id="${id}" value="${val}" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:8px;font-size:13px;font-family:inherit;">`;
   }
@@ -2378,7 +2405,7 @@ function enterRefundEditMode() {
       efield('최종환불금액', 'redit-최종환불금액', r.최종환불금액),
     ])}
     ${esection('상신 정보', [
-      efield('상신예정일', 'redit-상신예정일', r.상신예정일),
+      efield('입금예정일', 'redit-상신예정일', r.상신예정일, { date: true }),
     ])}
   `;
   document.getElementById('refund-detail-content').innerHTML = content;
