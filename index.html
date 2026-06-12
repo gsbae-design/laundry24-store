@@ -529,6 +529,13 @@ tbody tr.visit-today .td-name { color: #1d4ed8; }
       </div>
       <div class="fg full"><label>취소 사유 *</label><textarea id="rform-reason" rows="2" placeholder="취소 사유를 입력하세요"></textarea></div>
       <div class="fg full"><label>고객 번호 *</label><input type="text" id="rform-customer-no" placeholder="고객 연락처 또는 고객 번호"></div>
+      <div class="fg full"><label>회원 여부 *</label>
+        <select id="rform-member">
+          <option value="">선택하세요</option>
+          <option value="회원">회원</option>
+          <option value="비회원">비회원</option>
+        </select>
+      </div>
     </div>
 
     <!-- 카드 취소 필드 -->
@@ -1917,7 +1924,7 @@ async function _openRefundFormCore() {
   }
 
   // 초기화
-  ['rform-manager','rform-type','rform-cause','rform-reason','rform-customer-no',
+  ['rform-manager','rform-type','rform-cause','rform-reason','rform-customer-no','rform-member',
    'rform-cardco','rform-cardno','rform-appno','rform-appdate','rform-cardamt',
    'rform-bank','rform-accno','rform-holder','rform-accamt'].forEach(id => {
     const el = document.getElementById(id);
@@ -1939,9 +1946,10 @@ async function submitRefundForm() {
   const cause = document.getElementById('rform-cause').value.trim();
   const reason = document.getElementById('rform-reason').value.trim();
   const customerNo = document.getElementById('rform-customer-no').value.trim();
-  if (!manager || !cause || !reason || !customerNo) {
+  const member = document.getElementById('rform-member').value;
+  if (!manager || !cause || !reason || !customerNo || !member) {
     const err = document.getElementById('rform-error');
-    err.textContent = '담당자명, 상세원인, 취소사유, 고객번호는 필수입니다.';
+    err.textContent = '담당자명, 상세원인, 취소사유, 고객번호, 회원여부는 필수입니다.';
     err.style.display = 'block';
     return;
   }
@@ -1965,6 +1973,7 @@ async function submitRefundForm() {
     상세원인: cause,
     취소사유: reason,
     고객번호: document.getElementById('rform-customer-no').value.trim() || null,
+    회원여부: member,
     카드사명: isCard ? document.getElementById('rform-cardco').value.trim() : null,
     카드번호: isCard ? document.getElementById('rform-cardno').value.trim() : null,
     승인번호: isCard ? document.getElementById('rform-appno').value.trim() : null,
@@ -2262,6 +2271,7 @@ function openRefundDetail(id) {
       row('결제수단', r.결제수단),
       row('환불방법', r.환불방법, true),
       row('고객번호', r.고객번호),
+      row('회원여부', r.회원여부),
     ])}
     ${section('접수 내용', [
       row('문의유형', r.문의유형),
@@ -2347,6 +2357,7 @@ function enterRefundEditMode() {
       efield('결제수단', 'redit-결제수단', r.결제수단),
       efield('환불방법', 'redit-환불방법', r.환불방법),
       efield('고객번호', 'redit-고객번호', r.고객번호),
+      efield('회원여부', 'redit-회원여부', r.회원여부, { select: ['', '회원', '비회원'] }),
     ])}
     ${esection('접수 내용', [
       efield('문의유형', 'redit-문의유형', r.문의유형, { select: typeOptions }),
@@ -2381,7 +2392,7 @@ function cancelRefundEdit() {
 }
 
 async function saveRefundEdit() {
-  const fields = ['접수일자','담당자명','매장명','사용기기','기기번호','결제수단','환불방법','고객번호',
+  const fields = ['접수일자','담당자명','매장명','사용기기','기기번호','결제수단','환불방법','고객번호','회원여부',
     '문의유형','상세원인','취소사유','카드사명','카드번호','승인번호','승인일시','최종취소금액',
     '은행명','계좌번호','예금주','최종환불금액','상신예정일'];
   const updates = {};
@@ -2501,7 +2512,7 @@ async function exportRefundExcel() {
     return;
   }
 
-  const header = ['No','매장명','직영유무','고객번호','회원여부','론디원여부','환불 요청 항목','문의유형','상세사유','부담주체','은행명','계좌번호','예금주','최종환불금액','입금일자'];
+  const header = ['No','매장명','직영유무','고객번호','회원여부','론디원여부','환불 요청 항목','문의유형','상세사유','부담주체','은행명','계좌번호','예금주','최종 환불 금액','입금일자'];
   const rows = target.map((r, i) => {
     const store = STORES.find(s => s.name === r.매장명);
     const itemLabel = r.사용기기 + (r.기기번호 ? ' ' + r.기기번호 + '번' : '');
@@ -2511,11 +2522,11 @@ async function exportRefundExcel() {
       r.매장명 || '',
       store?.type || '',
       r.고객번호 || '',
-      '',
+      r.회원여부 || '',
       store?.rondiOne || '',
       itemLabel,
       r.문의유형 || '',
-      r.취소사유 || '',
+      r.결제수단 || '',
       owner,
       r.은행명 || '',
       r.계좌번호 || '',
